@@ -1,0 +1,133 @@
+/* page resets */
+html {
+    box-sizing: border-box;
+}
+
+*, *::after, *::before {
+    box-sizing: inherit;
+}
+
+/* general */
+body {
+    margin: 0;
+    padding: 0;
+    background-image: url(images/wallpaper.jpg);
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: bottom;
+    font-family: 'Antonio', sans-serif;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+}
+
+/* search bar */
+.searchBar {
+    position: absolute;
+    right: 20px;
+    top: 25px;
+    cursor: pointer;
+    display: flex;
+}
+
+.searchBar:hover button {
+    border-color: rgba(255, 255, 255, 0.7);
+    border-style: solid;
+    border-top-right-radius: 100vh;
+    border-bottom-right-radius: 100vh;
+}
+
+.searchBar:hover input {
+    width: 200px;
+    border-color: rgba(255, 255, 255, 0.7);
+    border-style: solid;
+    border-right: none;
+    transition: 0.8s;
+}
+
+.searchBar:focus-within button {
+    border-color: rgba(255, 255, 255, 0.7);
+    border-style: solid;
+    border-top-right-radius: 100vh;
+    border-bottom-right-radius: 100vh;
+}
+
+.searchBar:focus-within input {
+    width: 200px;
+    border-color: rgba(255, 255, 255, 0.7);
+    border-style: solid;
+    border-right: none;
+    transition: 0.8s;
+}
+
+button {
+    outline: none;
+    border: none;
+    border-left: none;
+    background-color: transparent;
+    cursor: pointer;
+    margin: 0;
+}
+
+input {
+    all: unset;
+    width: 0;
+    background-color: transparent;
+    margin: 0;
+    padding: 0 10px;
+    color:rgba(255, 255, 255, 0.7);
+    outline: none;
+    cursor:auto;
+}
+
+
+/* weather infos */
+.weatherInfo {
+    grid-column: 2 / 2;
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+h2 {
+    font-size: 2.5rem;
+    margin: 0;
+    padding: 0;
+}
+
+h4 {
+    font-size: 1rem;
+    margin: 0;
+    padding: 0;
+}
+
+.temperature {
+    font-size: 3.5rem;
+    margin: 0;
+    margin-top: 10px;
+}
+
+.temperature::after {
+    content: '°';
+}
+
+.highLow {
+    display: flex;
+    gap: 10px;
+}
+
+/* week days div */
+.weekDays {
+    grid-column: 1 / 6;
+    grid-row: 4 / 4;
+    display: flex;
+    justify-content: space-around;
+}
