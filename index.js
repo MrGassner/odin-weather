@@ -1,32 +1,3 @@
-const weekDays = (() => {
-    const weekDays = document.querySelector('.weekDays')
-
-    function dayName(i) {
-        const weekday = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thirsday', 'Friday', 'Saturday'];
-        const date = new Date()
-        const today = date.getDay()
-        let day = 0;
-        
-        if ((today + i) > 6) {
-            day = today + i - 7
-        } else {
-            day = today + i
-        }
-
-        return weekday[day]
-    }
-
-    for (let i = 1; i < 7; i++) {
-        const div = document.createElement('div')
-        const h4 = document.createElement('h4')
-        h4.classList.add('weekDay')
-        h4.innerHTML = dayName(i)
-
-        div.appendChild(h4)
-        weekDays.appendChild(div)
-    }
-})();
-
 function weatherAPI(selectedCity) {
     const city = document.querySelector('.city')
     const country = document.querySelector('.country')
@@ -34,37 +5,33 @@ function weatherAPI(selectedCity) {
     const description = document.querySelector('.description')
     const highest = document.querySelector('.highest')
     const lowest = document.querySelector('.lowest')
-    const regionNamesInEnglish = new Intl.DisplayNames(['en'], { type: 'region' });
+    const iconImg = document.querySelector('.iconImg')
 
     fetch(`https://api.openweathermap.org/data/2.5/weather?q=${selectedCity}&APPID=75a0348f82edf39f41dec5c2d6cd790f`)
         .then(response => response.json())
         .then(response => {
             city.innerHTML = response.name
-            country.innerHTML = regionNamesInEnglish.of(response.sys.country)
+            country.innerHTML = `, ${response.sys.country}`
             temperature.innerHTML = Math.round(response.main.temp - 273.15)
             description.innerHTML = response.weather[0].description
-            highest.innerHTML = `H: ${Math.round(response.main.temp_max - 273.15)}°`
-            lowest.innerHTML = `L: ${Math.round(response.main.temp_min - 272.15)}°`
+            highest.innerHTML = `H: ${Math.round(response.main.temp_max - 273.15)}`
+            lowest.innerHTML = `L: ${Math.round(response.main.temp_min - 272.15)}`
+            iconImg.src = `animated/${response.weather[0].icon}.svg`
+            iconImg.alt = response.weather[0].description
             console.log(response)
         })
-
 }
 
 function cityHandler(city = null) {
-
-    console.log(city)
-
     if (city === null) {
         if (localStorage.city) {
             selectedCity = JSON.parse(localStorage.getItem('city'))
             return selectedCity
         } 
     }
-
     if (localStorage.city) {
         selectedCity = JSON.parse(localStorage.getItem('projects'))
     }
-
     if (city === null) return 'São José'
     selectedCity = city
     localStorage.city = JSON.stringify(selectedCity)
@@ -76,4 +43,32 @@ document.querySelector('button[type="submit"]').addEventListener('click', () => 
     cityHandler(input.value)
 })
 
+const fahrenheit = (() => {
+    const h1 = document.querySelector('h1')
+    const highest = document.querySelector('.highest')
+    const lowest = document.querySelector('.lowest')
+
+    h1.addEventListener('click', () => {
+        if(h1.dataset.value === '°C') {
+            let convertedDegree = (h1.innerHTML * 9/5) + 32
+            let convertedHighest = ((highest.innerHTML).slice(-2) * 9/5) + 32
+            let convertedLowest = ((lowest.innerHTML).slice(-2) * 9/5) + 32
+            h1.innerHTML = Math.round(convertedDegree)
+            highest.innerHTML = `H: ${Math.round(convertedHighest)}`
+            lowest.innerHTML = `L: ${Math.round(convertedLowest)}`
+            h1.setAttribute('data-value', '°F')            
+        } else {
+            let convertedDegree = (h1.innerHTML - 32) * 5/9
+            let convertedHighest = ((highest.innerHTML).slice(-2) - 32) * 5/9
+            let convertedLowest = ((lowest.innerHTML).slice(-2) - 32) * 5/9
+            h1.innerHTML = Math.round(convertedDegree)
+            highest.innerHTML = `H: ${Math.round(convertedHighest)}`
+            lowest.innerHTML = `L: ${Math.round(convertedLowest)}`
+            h1.setAttribute('data-value', '°C') 
+        }
+    })
+})();
+
 weatherAPI(cityHandler())
+
+

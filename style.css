@@ -9,8 +9,6 @@ html {
 
 /* general */
 body {
-    margin: 0;
-    padding: 0;
     background-image: url(images/wallpaper.jpg);
     background-attachment: fixed;
     background-repeat: no-repeat;
@@ -22,9 +20,15 @@ body {
 }
 
 .container {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
     display: grid;
+    justify-self: center;
+    max-width: 1000px;
     grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(3, 1fr);
 }
 
 /* search bar */
@@ -89,12 +93,24 @@ input {
 
 /* weather infos */
 .weatherInfo {
-    grid-column: 2 / 2;
+    grid-column: 1 / 1;
     margin: 20px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.cityInfo {
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    margin: 0;
+    padding: 0;
+    line-height: 6rem;
 }
 
 h2 {
@@ -104,19 +120,31 @@ h2 {
 }
 
 h4 {
-    font-size: 1rem;
+    font-size: 1.8rem;
     margin: 0;
     padding: 0;
 }
 
+.highest:after {
+    content: '°'
+}
+
+.lowest:after {
+    content: '°'
+}
+
 .temperature {
-    font-size: 3.5rem;
+    font-size: 6rem;
     margin: 0;
-    margin-top: 10px;
+    cursor: pointer;
 }
 
 .temperature::after {
-    content: '°';
+    content: attr(data-value);
+}
+
+.description {
+    margin-top: 5px;
 }
 
 .highLow {
@@ -124,10 +152,6 @@ h4 {
     gap: 10px;
 }
 
-/* week days div */
-.weekDays {
-    grid-column: 1 / 6;
-    grid-row: 4 / 4;
-    display: flex;
-    justify-content: space-around;
+.animated {
+    width: 100px;
 }
