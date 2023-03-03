@@ -23,6 +23,7 @@ function weatherAPI(selectedCity) {
 }
 
 function cityHandler(city = null) {
+    if (city === '') return 'São José'
     if (city === null) {
         if (localStorage.city) {
             selectedCity = JSON.parse(localStorage.getItem('city'))
