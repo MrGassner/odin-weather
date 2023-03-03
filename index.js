@@ -69,6 +69,6 @@ const fahrenheit = (() => {
     })
 })();
 
-weatherAPI(cityHandler('São José'))
+weatherAPI(cityHandler())
 
 
